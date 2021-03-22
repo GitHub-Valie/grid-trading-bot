@@ -5,12 +5,19 @@ from urllib.parse import urlencode
 from dotenv import load_dotenv
 
 # Environment variables: Binance API keys
-load_dotenv(join(dirname(__file__), '.env'))
-API_KEY = os.environ.get('API_KEY')
-SECRET_KEY = os.environ.get('SECRET_KEY')
+production = False
 
-# Base URL for Binance Spot
-BASE_URL = "https://fapi.binance.com"
+# Binance Future
+if production == True:
+    load_dotenv(join(dirname(__file__), '.env'))
+    API_KEY = os.environ.get('API_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    BASE_URL = "https://fapi.binance.com"
+else:
+    load_dotenv(join(dirname(__file__), '.env'))
+    API_KEY = os.environ.get('TEST_API')
+    SECRET_KEY = os.environ.get('TEST_SECRET')
+    BASE_URL = "https://testnet.binancefuture.com"
 
 # https://binance-docs.github.io/apidocs/spot/en/#endpoint-security-type
 def hashing(query_string):
